@@ -11,15 +11,13 @@ class Example(db.Model):
    __tablename__="example"
    id=db.Column(db.Integer,primary_key=True,nullable=False,autoincrement=True)
    example=db.Column(db.String(100),nullable=False)
+   answer=db.relationship('Answer',backref='example_answer')
 
-def get_all_examples():
-    examples=Example.query.all()
-    for ex in examples:
-       print(ex.example)
-
-def get_example_id(id):
-    example=Example.query.filter_by(id=id)
-    print(example.example)
+class Answer(db.Model):
+   __tablename__="answer"
+   id=db.Column(db.Integer,primary_key=True,nullable=False,autoincrement=True)
+   answer=db.Column(db.String(120),nullable=False)
+   example_id=db.Column(db.Integer,db.ForeignKey('example.id'))
     
 
 if __name__=="__main__":
